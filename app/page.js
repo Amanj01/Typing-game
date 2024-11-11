@@ -358,7 +358,6 @@ const TypingGame = () => {
     setInput(newInput);
     setTotalKeyPresses(prev => prev + 1);
 
-    // Check for mistakes in real-time
     const newMistakeIndices = [];
     for (let i = 0; i < newInput.length; i++) {
       if (newInput[i] !== currentText[i]) {
@@ -407,25 +406,21 @@ const TypingGame = () => {
         isDarkMode ? 'bg-gray-800' : 'bg-white'
       }`}>
         <div className="flex justify-between items-center">
-          <motion.h1 
-            className={`text-3xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-800'}`}
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
+          <h1 
+            className={`text-3xl font-bold transform transition-all duration-300 ${isDarkMode ? 'text-white' : 'text-gray-800'}`}
           >
             {t.title}
-          </motion.h1>
-          <motion.button
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
+          </h1>
+          <button
             onClick={() => setIsDarkMode(!isDarkMode)}
-            className="p-2 rounded-full"
+            className="p-2 rounded-full transform transition-transform duration-200 hover:scale-110 active:scale-90"
           >
             {isDarkMode ? (
               <Sun className="text-white" size={24} />
             ) : (
               <Moon className="text-gray-800" size={24} />
             )}
-          </motion.button>
+          </button>
         </div>
 
         <div className={`flex justify-between text-lg font-semibold ${
@@ -466,35 +461,30 @@ const TypingGame = () => {
                 <option value={60}>60 {t.seconds}</option>
               </select>
             </div>
-            <motion.button
-              className="w-full py-3 px-6 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition-colors"
+            <button
+              className="w-full py-3 px-6 bg-purple-600 text-white rounded-lg font-semibold transition-all duration-200 hover:bg-purple-700 hover:scale-105 active:scale-95"
               onClick={startGame}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
             >
               {t.startGame}
-            </motion.button>
+            </button>
           </div>
         )}
 
         {gameStarted && (
           <div className="space-y-4">
-            <motion.div
-              className={`text-2xl font-bold text-center ${
+            <div
+              className={`text-2xl font-bold text-center transition-opacity duration-300 ${
                 isDarkMode ? 'text-white' : 'text-gray-800'
               }`}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              key={currentText}
               dir={lang === 'ar' || lang === 'ku' ? 'rtl' : 'ltr'}
             >
               {renderText()}
-            </motion.div>
+            </div>
             <input
               type="text"
               value={input}
               onChange={handleInputChange}
-              className={`w-full p-3 border-2 rounded-lg focus:outline-none ${
+              className={`w-full p-3 border-2 rounded-lg focus:outline-none transition-colors duration-200 ${
                 isDarkMode 
                   ? 'bg-gray-700 text-white border-gray-600 focus:border-purple-500' 
                   : 'bg-white text-gray-800 border-gray-300 focus:border-purple-500'
@@ -506,57 +496,55 @@ const TypingGame = () => {
           </div>
         )}
 
-{gameOver && (
-  <motion.div 
-    className="text-center space-y-4"
-    initial={{ opacity: 0, scale: 0.9 }}
-    animate={{ opacity: 1, scale: 1 }}
-  >
-    <h2 className={`text-xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-800'}`}>
-      {t.gameOver}
-    </h2>
-    <p className={`text-lg ${isDarkMode ? 'text-white' : 'text-gray-800'}`}>
-      {t.finalScore}: {score}
-    </p>
-    <p className={`text-lg ${isDarkMode ? 'text-white' : 'text-gray-800'}`}>
-      {t.mistakes}: {mistakeCount}
-    </p>
-    <p className={`text-lg ${isDarkMode ? 'text-white' : 'text-gray-800'}`}>
-      {t.accuracy}: {calculateAccuracy().toFixed(1)}%
-    </p>
-    
-    <div className="flex justify-center gap-1">
-      {Array.from({ length: 5 }).map((_, i) => (
-        <Star
-          key={i}
-          className={i < calculateRating() ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'}
-          size={24}
-        />
-      ))}
-    </div>
-    
-    <button
-      className="py-2 px-6 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition-colors"
-      onClick={startGame}
-    >
-      {t.playAgain}
-    </button>
-  </motion.div>
-)}
+        {gameOver && (
+          <div 
+            className="text-center space-y-4 transform transition-all duration-300"
+          >
+            <h2 className={`text-xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-800'}`}>
+              {t.gameOver}
+            </h2>
+            <p className={`text-lg ${isDarkMode ? 'text-white' : 'text-gray-800'}`}>
+              {t.finalScore}: {score}
+            </p>
+            <p className={`text-lg ${isDarkMode ? 'text-white' : 'text-gray-800'}`}>
+              {t.mistakes}: {mistakeCount}
+            </p>
+            <p className={`text-lg ${isDarkMode ? 'text-white' : 'text-gray-800'}`}>
+              {t.accuracy}: {calculateAccuracy().toFixed(1)}%
+            </p>
+            
+            <div className="flex justify-center gap-1">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <Star
+                  key={i}
+                  className={`transition-colors duration-200 ${i < calculateRating() ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'}`}
+                  size={24}
+                />
+              ))}
+            </div>
+            
+            <button
+              className="py-2 px-6 bg-purple-600 text-white rounded-lg font-semibold transition-all duration-200 hover:bg-purple-700 hover:scale-105 active:scale-95"
+              onClick={startGame}
+            >
+              {t.playAgain}
+            </button>
+          </div>
+        )}
 
-<select
-  className={`w-full py-2 px-4 rounded-lg font-semibold ${
-    isDarkMode 
-      ? 'bg-gray-700 text-white border-gray-600' 
-      : 'bg-gray-200 text-gray-700'
-  }`}
-  value={lang}
-  onChange={(e) => setLang(e.target.value)}
->
-  <option value="en">English</option>
-  <option value="ku">کوردی</option>
-  <option value="ar">العربية</option>
-</select>
+        <select
+          className={`w-full py-2 px-4 rounded-lg font-semibold transition-colors duration-200 ${
+            isDarkMode 
+              ? 'bg-gray-700 text-white border-gray-600' 
+              : 'bg-gray-200 text-gray-700'
+          }`}
+          value={lang}
+          onChange={(e) => setLang(e.target.value)}
+        >
+          <option value="en">English</option>
+          <option value="ku">کوردی</option>
+          <option value="ar">العربية</option>
+        </select>
       </div>
       <div className="flex gap-1 pt-10"> Developer:<a href="https://github.com/Amanj01" target="_blank" rel="noopener noreferrer"> Amanj shkur</a></div>
     </div>
