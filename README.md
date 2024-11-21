@@ -2,7 +2,7 @@
 
 A modern, feature-rich typing game built with Next.js that supports multiple languages and offers various gaming modes to help users improve their typing skills.
 
-![Project Preview](/placeholder-for-project-screenshot.png)
+website link: https://typing10.netlify.app/
 
 ## ✨ Features
 
